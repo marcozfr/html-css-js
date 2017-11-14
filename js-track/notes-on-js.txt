@@ -1,0 +1,87 @@
+Types of declarations
+---------------------
+var x = 10 [can be reasigned, can be redeclared]
+let x = 10 [exists within a given context, can be reasigned, cannot be redeclared]
+const x = 10 [cannot be reasigned, cannot be redeclared]
+
+DOM - Selectors
+---------------
+document.getElementById [id="xx"]
+document.getElementsByTagName [p,html,ul,body,etc]
+document.getElementsByClassName [class="xx"]
+document.querySelector [Css selectors, returns 1st match]
+document.querySelectorAll [Returns all]
+
+Manipulating DOM Elements
+document.createElement
+element.appendChild
+element.removeChild
+element.parentNode
+element.previousSibling
+element.previousElementSibling
+element.nextElementSibling
+parentNode.insertBefore(new,item)
+
+Event Handlers
+window.setTimeout(function, ms, function params values);
+element.addEventListener(action, function(event))
+event.target | target.tagName
+
+
+object types
+------------
+object literal 
+	var lit = {};
+constructor function 
+	function CF(email){}; var cf = new CF('test');
+
+Prototype function:
+-----------------
+function Dog(breed){}
+Dog.prototype.bark = function(){}
+	
+Prototypal Inheritance
+---------------------
+function Cat(breed){
+	Animal.call(this,'cat'); // call to super constructor
+}
+Cat.prototype = Object.create(Animal.prototype); //inherit super methods
+
+D3 selectors
+------------
+d3.selectAll
+d3.select 
+d3.select.style
+d3.select.attr
+d3.select.classed(text) // boolean if has given class
+
+
+
+
+
+NPM 
+------------------
+npm root -g (where are all packages installed? - global)
+npm list -g (lists all installed packages -global)
+npm ls -g [--depth=0]
+npm ls -g | grep <bla>
+
+npm init (create package.json)
+npm install -g 
+npm install --save-dev (add to package.json as dev dependency)
+npm install --save (add to package.json as dependency)
+NODE_ENV=production npm install 
+
+versioning
+http://semver.org/
+MAJOR.MINOR.PATCH
+^ before a version number means install up to the latest MINOR release.
+e.g. ^1.1 can install 1.3 if available but not 2.0
+~ before a version number means install up to the latest PATCH release.
+e.g. ~2.0.1 can install 2.0.9 if available but not 2.1.0
+
+--- npm run
+npm run test
+npm test
+
+

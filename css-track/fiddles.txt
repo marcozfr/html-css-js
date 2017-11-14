@@ -1,0 +1,11 @@
+Testing clear fix content
+
+https://jsfiddle.net/pevfrLpx/
+
+Playing with background, linear-gradient and radial-gradient
+
+https://jsfiddle.net/gmgecnz9/
+
+Basic Layout, Sticky fixed header, Sticky footer, content centered, columns on content.
+
+https://jsfiddle.net/wkgxrb8v/1/

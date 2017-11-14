@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Population</title>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <h1>Population for 2016</h1>
+    <div>
+      <svg id="pop" height="700px" width="100%" style="overflow-y: scroll;"></svg>
+    </div>
+  </body>
+  <script type="text/javascript">
+    d3.csv('API_SP.POP.TOTL_DS2_en_csv_v2.csv',function(error, data){
+      console.log(data);
+      
+      var maxWidth = 700;
+      var MAX = 7442135578;
+      d3.select('#pop').selectAll('rect')
+        .data(data)
+        .enter()        
+        .append('rect')
+        .filter(function(d){
+            return d['Country Name'] !== 'World' ? this : null;
+        })
+        .attr('height' , 5)
+        .attr('width', function(d){
+          var total =  d['2016'] * maxWidth / MAX;
+          console.log(d['Country Name'] + ' - ' +total);
+          return total;
+        })
+        .attr('title',function(d){
+          return d['Country Name'];
+        })
+        .attr('x', 50)
+        .attr('y', function(d, i){
+          return i * 10;
+        })
+        .attr('fill', 'green');
+    });
+  </script>
+</html>

@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Peruvian population 1960 - 2016</title>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<style>
+		.axis path {
+		  stroke-width: 1;
+		  fill: none;
+		  stroke: #333;
+		  shape-rendering: crispEdges;
+		}
+		g.dot text{
+			font-size: 1em;
+		}
+	</style>
+  </head>
+  <body>
+    <h1>Population for 2016</h1>
+    <div>
+      <svg id="pop" height="1000px" width="100%" style="overflow-y: scroll;"></svg>
+    </div>
+  </body>
+  <script type="text/javascript">
+    d3.csv('API_SP.POP.TOTL_DS2_en_csv_v2.csv',function(error, data){
+      var countryData = data.find(function(e){
+        return e['Country Name'] === 'Peru';
+      });
+      var popByYear = [];
+	  var y = 0;
+	  var PORT = 500;
+      for(var i = 1960 ; i <= 2016 ; i++){
+		popByYear[y] = [];
+        popByYear[y][0] = i;
+        popByYear[y][1] = parseInt(countryData[i]);
+		y++;
+      }
+	  
+	  /** zoom **/
+	  var zoom = d3.behavior.zoom().scaleExtent([1,10]).on("zoom", zoomed);
+	
+	  /** setup the y scale **/
+      var yScale = d3.scale.linear().range([PORT,0]);
+      var yDomain = d3.extent(popByYear, function(d){
+        return d[1];
+      });
+      yScale.domain(yDomain);
+	  
+	  /** setup the x scale **/
+	  var xScale = d3.scale.linear().range([0,PORT]);
+      var xDomain = d3.extent(popByYear, function(d){
+        return d[0];
+      });
+      xScale.domain(xDomain);
+	  
+	  /** set up the axes **/
+	  var yAxis = d3.svg.axis().scale(yScale).orient('left').ticks(20);
+	  
+	  var xAxis = d3.svg.axis().scale(xScale).orient('bottom').ticks(15);
+
+	  var svgElem = d3.select('#pop')
+						.append('g')
+						.attr('transform', 'translate(100,10)'); // axis starts before first <g> boundaries in svg, move it to include it
+	  // apply zoom to SVG
+	  svgElem.call(zoom);
+	  
+      var global = svgElem.selectAll('g')
+        .data(popByYear)
+        .enter()
+        .append('g')
+			.attr('class','dot')
+			.attr('transform', function(d, j){
+				return 'translate('+ xScale(d[0]) +',' + yScale(d[1]) +')';
+			});
+		global.append('circle')
+			.attr('r', 3);
+			
+		var numfmt = d3.format(',.2');	
+		global.append('text')
+			.attr('x', 12)
+			.attr('y', 12)
+			.text(function(d){
+				return d[0] + ' # '+numfmt(d[1]);
+			})
+			.attr('style','display:none;' );
+			
+		global.on('mouseenter', function(d){
+			var thiz = d3.select(this)
+			
+			thiz.select('text')
+				.attr('style','display:block;' );
+				
+			thiz.select('circle')
+				.transition()
+				.attr('r',9)
+				.attr('fill', '#157199');
+		});
+
+		global.on('mouseleave', function(d){
+			var thiz = d3.select(this)
+			
+			thiz.select('text')
+				.attr('style','display:none;' );
+			
+			thiz.select('circle')
+				.attr('r',3)
+				.attr('fill', 'black');
+		});
+		
+	
+	  svgElem
+		.append('g')
+		.attr('class', 'y axis')
+		.call(yAxis);
+	  
+	  svgElem
+		.append('g')
+		.attr("transform", "translate(0,"+ PORT +")")
+		.attr('class', 'x axis')
+		.call(xAxis);
+	
+	function zoomed() {
+      svgElem.attr("transform", "translate(" + 
+                     d3.event.translate + ")" +
+                    "scale(" + d3.event.scale + ")");
+    };
+	
+    });
+  </script>
+</html>

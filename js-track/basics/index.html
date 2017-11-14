@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Index</title>
+	</head>
+	<body>
+		<button onclick="changeUser();">Change user</button>
+		<h1></h1>
+		<img></img>
+		<script>
+			const img = document.querySelector('img');
+			img.changed = false;
+			img.setAttribute('src','http://www.userlogos.org/files/logos/zigzag/firefox2.png');
+			img.onclick = () =>{
+				if(img.changed === false){
+					img.setAttribute('src','http://www.userlogos.org/files/logos/zigzag/firefox2.png');
+					img.changed = true;
+				}else {
+					img.setAttribute('src','http://icons.iconarchive.com/icons/martz90/hex/512/firefox-2-icon.png');
+					img.changed = false;
+				}
+			};
+			
+			var changeContent = (c,t) => {
+				document.querySelector(c).textContent = t;
+			};
+			
+			var changeUser = () => {
+				var name = prompt('Please enter your name:');
+				sessionStorage.setItem('name',name);
+				changeContent('h1','Hello, '+name)
+			}
+			
+			if(!sessionStorage.getItem('name')){
+				changeUser('h1','Hello, visitor');
+			}else{
+				changeContent('h1','Hello, '+ sessionStorage.getItem('name'));
+			}
+			
+		</script>
+	</body>
+</html>

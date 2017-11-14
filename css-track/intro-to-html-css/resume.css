@@ -1,0 +1,28 @@
+body {
+	margin: 0px;
+	font-family : sans-serif;
+	text-align: center;
+}
+
+.profile-pic {
+	border:  2px solid black;
+	border-radius: 50%;
+}
+
+h2 {
+	text-transform: capitalize;
+}
+
+.main-section {
+	padding: 25px;
+	height: 340px;
+	background-color: #e2e2e2;
+}
+
+.main-title {
+	padding: 5px;
+}
+
+.qualification-list {
+	list-style: none outside none;
+}
